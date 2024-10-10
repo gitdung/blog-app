@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import './styles.css';
+import '../components/styles.css';
 
 function Blog() {
     const [posts, setPosts] = useState([]);
@@ -19,16 +19,6 @@ function Blog() {
     const dropdownRef = useRef(null);
 
     useEffect(() => {
-        // Initialize authentication state from localStorage
-        const storedAuth = JSON.parse(localStorage.getItem('auth'));
-        if (storedAuth && storedAuth.isLoggedIn) {
-            setIsLoggedIn(storedAuth.isLoggedIn);
-            setFullName(storedAuth.fullName);
-            // If using tokens, set axios default headers here
-            if (storedAuth.token) {
-                axios.defaults.headers.common['Authorization'] = `Bearer ${storedAuth.token}`;
-            }
-        }
         fetchPosts();
     }, []);
 
@@ -117,23 +107,8 @@ function Blog() {
                 username: username,
                 password: password,
             });
-            // Assuming the backend returns a token and full_name
-            const { token, full_name } = response.data;
-
-            // Save auth data to state
-            setFullName(full_name);
-            setIsLoggedIn(true);
-
-            // Save auth data to localStorage
-            localStorage.setItem('auth', JSON.stringify({
-                isLoggedIn: true,
-                fullName: full_name,
-                token: token
-            }));
-
-            // Set axios default authorization header
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-
+            setFullName(response.data.full_name); // Lưu tên đầy đủ của người dùng
+            setIsLoggedIn(true); // Đánh dấu người dùng đã đăng nhập
             alert('Login successful!');
             // Reset form fields
             setUsername('');
@@ -169,10 +144,6 @@ function Blog() {
         setIsLoggedIn(false);
         setFullName('');
         setShowDropdown(false);
-        // Remove auth data from localStorage
-        localStorage.removeItem('auth');
-        // Remove axios default authorization header
-        delete axios.defaults.headers.common['Authorization'];
         alert('You have been logged out.');
     };
 
@@ -230,16 +201,14 @@ function Blog() {
 
             {/* Modal */}
             {showModal && (
-                <div className="modal-overlay" onClick={closeModal} aria-modal="true" role="dialog">
-                    <div className="modal-content" onClick={(e) => e.stopPropagation()} aria-labelledby="modal-title">
-                        <span className="close-button" onClick={closeModal} aria-label="Close modal">&times;</span>
+                <div className="modal-overlay" onClick={closeModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <span className="close-button" onClick={closeModal}>&times;</span>
                         {isLogin ? (
                             <div className="modal-form">
-                                <h2 id="modal-title">Login</h2>
+                                <h2>Login</h2>
                                 <form onSubmit={handleLogin}>
-                                    <label htmlFor="login-username" className="visually-hidden">Username</label>
                                     <input
-                                        id="login-username"
                                         type="text"
                                         placeholder="Username"
                                         value={username}
@@ -247,9 +216,7 @@ function Blog() {
                                         required
                                         className="modal-input"
                                     />
-                                    <label htmlFor="login-password" className="visually-hidden">Password</label>
                                     <input
-                                        id="login-password"
                                         type="password"
                                         placeholder="Password"
                                         value={password}
@@ -268,11 +235,9 @@ function Blog() {
                             </div>
                         ) : (
                             <div className="modal-form">
-                                <h2 id="modal-title">Sign Up</h2>
+                                <h2>Sign Up</h2>
                                 <form onSubmit={handleSignUp}>
-                                    <label htmlFor="signup-fullname" className="visually-hidden">Full Name</label>
                                     <input
-                                        id="signup-fullname"
                                         type="text"
                                         placeholder="Full Name"
                                         value={fullName}
@@ -280,9 +245,7 @@ function Blog() {
                                         required
                                         className="modal-input"
                                     />
-                                    <label htmlFor="signup-username" className="visually-hidden">Username</label>
                                     <input
-                                        id="signup-username"
                                         type="text"
                                         placeholder="Username"
                                         value={username}
@@ -290,9 +253,7 @@ function Blog() {
                                         required
                                         className="modal-input"
                                     />
-                                    <label htmlFor="signup-password" className="visually-hidden">Password</label>
                                     <input
-                                        id="signup-password"
                                         type="password"
                                         placeholder="Password"
                                         value={password}
