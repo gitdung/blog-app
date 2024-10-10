@@ -3,6 +3,7 @@
 
     cd backend
     pip install -r requirements.txt
+    uvicorn main:app --reload
 
 The backend will be running at http://localhost:8000.
 
