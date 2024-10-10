@@ -1,5 +1,5 @@
 import React from 'react';
-import Blog from './Blog';
+import Blog from './components/Blog';
 
 function App() {
     return (
