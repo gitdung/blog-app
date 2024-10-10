@@ -1,0 +1,333 @@
+/* General Styles */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.blog-app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header Styles */
+.header {
+    background-color: #333;
+    color: #fff;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-left h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.header-right {
+    position: relative;
+}
+
+.user-menu {
+    cursor: pointer;
+    position: relative;
+}
+
+.user-name {
+    font-weight: bold;
+}
+
+.dropdown {
+    position: absolute;
+    right: 0;
+    top: 30px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    z-index: 1000;
+    width: 150px;
+}
+
+.dropdown-item {
+    width: 100%;
+    padding: 10px;
+    background: none;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.dropdown-item:hover {
+    background-color: #f1f1f1;
+}
+
+.auth-links .auth-text {
+    font-size: 16px;
+    cursor: pointer;
+    color: #fff;
+    transition: color 0.3s;
+}
+
+.auth-links .auth-text:hover {
+    color: #ddd;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 400px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    cursor: pointer;
+}
+
+.modal-form h2 {
+    margin-top: 0;
+    text-align: center;
+}
+
+.modal-input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.modal-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.modal-button:hover {
+    background-color: #555;
+}
+
+.toggle-text {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.toggle-link {
+    color: #007BFF;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.toggle-link:hover {
+    color: #0056b3;
+}
+
+/* Main Content Styles */
+.blog-container {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Welcome Message */
+.welcome-message {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+    margin-top: 50px;
+}
+
+/* Create/Edit Post */
+.create-post {
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 600px; /* Restrict maximum width */
+    box-sizing: border-box;
+}
+
+.create-post h2 {
+    margin-top: 0;
+    font-size: 22px;
+}
+
+.post-input, .post-textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.post-textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.post-button {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.post-button:hover {
+    background-color: #218838;
+}
+
+/* Blog Posts */
+.blog-posts {
+    display: flex;
+    flex-direction: column; /* Stack posts vertically */
+    gap: 20px; /* Space between posts */
+    width: 100%;
+    max-width: 800px; /* Adjusted maximum width for better readability */
+    box-sizing: border-box;
+    padding: 0 10px;
+    margin: 0 auto; /* Center the container */
+}
+
+.blog-post {
+    background-color: #fff;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    width: 100%; /* Ensure posts take full width of the container */
+    max-width: 800px; /* Match container's max-width */
+    margin: 0 auto; /* Center each post */
+}
+
+.blog-post h3 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.post-image {
+    width: 100%;
+    height: auto;
+    max-height: 200px; /* Limit image height */
+    object-fit: cover;
+    border-radius: 4px;
+    margin: 10px 0;
+}
+
+.post-content {
+    flex: 1;
+}
+
+.post-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.post-action-button {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: opacity 0.3s;
+}
+
+.post-action-button:hover {
+    opacity: 0.8;
+}
+
+.post-action-button.delete {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.post-action-button:not(.delete) {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .create-post {
+        max-width: 90%;
+    }
+
+    .blog-posts {
+        max-width: 90%;
+    }
+
+    .post-image {
+        max-height: 150px;
+    }
+}
+
+@media (max-width: 480px) {
+    .create-post {
+        max-width: 100%;
+    }
+
+    .blog-posts {
+        max-width: 100%;
+    }
+
+    .post-image {
+        max-height: 120px;
+    }
+}
+
+/* Optional: Add smooth transitions for better UX */
+.blog-posts, .blog-post {
+    transition: all 0.3s ease-in-out;
+}
