@@ -15,6 +15,7 @@ function Blog() {
     const [showDropdown, setShowDropdown] = useState(false); // Kiểm tra trạng thái dropdown
     const [showModal, setShowModal] = useState(false); // Kiểm tra trạng thái modal
     const [isLogin, setIsLogin] = useState(true); // Kiểm tra xem modal đang ở trạng thái login hay signup
+    const [showEditModal, setShowEditModal] = useState(false);  // Hiển thị modal Edit
 
     const dropdownRef = useRef(null);
 
@@ -51,14 +52,16 @@ function Blog() {
                 await axios.put(`http://localhost:8000/posts/${editingPostId}`, {
                     title,
                     content,
-                    image
+                    image,
+                    author: fullName
                 });
                 alert('Post updated successfully!');
                 setEditingPostId(null);  // Reset sau khi cập nhật xong
                 setTitle('');
                 setContent('');
                 setImage('');
-                fetchPosts();
+                setShowEditModal(false);  // Ẩn modal chỉnh sửa
+                fetchPosts();  // Tải lại danh sách bài viết sau khi cập nhật
             } catch (error) {
                 console.error('Error editing post:', error);
             }
@@ -80,14 +83,18 @@ function Blog() {
             }
         }
     };
-
+    
+    
     const editPost = (post) => {
-        // Khi click nút Edit, chuyển dữ liệu bài viết vào form
         setTitle(post.title);
         setContent(post.content);
         setImage(post.image);
         setEditingPostId(post._id);  // Lưu lại ID bài viết đang chỉnh sửa
+        setShowEditModal(true);  // Hiển thị modal chỉnh sửa
+        console.log("Editing Post ID:", post._id);  // Kiểm tra giá trị ID
     };
+    
+    
 
     const deletePost = async (postId) => {
         if (window.confirm('Are you sure you want to delete this post?')) {
@@ -198,8 +205,8 @@ function Blog() {
                     )}
                 </div>
             </header>
-
-            {/* Modal */}
+    
+            {/* Modal Login/Signup */}
             {showModal && (
                 <div className="modal-overlay" onClick={closeModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -274,14 +281,47 @@ function Blog() {
                     </div>
                 </div>
             )}
-
+    
+            {/* Modal Edit Post */}
+            {showEditModal && (
+                <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <span className="close-button" onClick={() => setShowEditModal(false)}>&times;</span>
+                        <h2>Edit Post</h2>
+                        <input
+                            type="text"
+                            placeholder="Title"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            className="post-input"
+                        />
+                        <textarea
+                            placeholder="Content"
+                            value={content}
+                            onChange={(e) => setContent(e.target.value)}
+                            className="post-textarea"
+                        />
+                        <input
+                            type="text"
+                            placeholder="Image URL"
+                            value={image}
+                            onChange={(e) => setImage(e.target.value)}
+                            className="post-input"
+                        />
+                        <button onClick={createOrEditPost} className="post-button">
+                            Update Post
+                        </button>
+                    </div>
+                </div>
+            )}
+    
             {/* Main Content */}
             <div className="blog-container">
                 <h2>Welcome to the Blog App</h2>
                 {isLoggedIn ? (
                     <div>
                         <div className="create-post">
-                            <h2>{editingPostId ? 'Edit Post' : 'Create a New Post'}</h2>
+                            <h2>Create a New Post</h2>
                             <input
                                 type="text"
                                 placeholder="Title"
@@ -303,7 +343,7 @@ function Blog() {
                                 className="post-input"
                             />
                             <button onClick={createOrEditPost} className="post-button">
-                                {editingPostId ? 'Update Post' : 'Create Post'}
+                                Create Post
                             </button>
                         </div>
                         <div className="blog-posts">
@@ -328,8 +368,7 @@ function Blog() {
                 )}
             </div>
         </div>
-    );
-
+    );    
 }
 
 export default Blog;
