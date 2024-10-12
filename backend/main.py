@@ -7,17 +7,15 @@ import os
 
 app = FastAPI()
 
-# Cấu hình CORS
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Thay đổi cho phù hợp với frontend của bạn
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Kết nối MongoDB
-client = MongoClient(os.environ.get("MONGODB_URL", "mongodb://localhost:27017"))
+client = MongoClient(os.environ.get("MONGODB_URL", "mongodb+srv://admin:4444@cluster0.zrqtlpl.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"))
 db = client.blog_database
 
 # Mô hình dữ liệu cho bài viết
@@ -25,7 +23,7 @@ class BlogPost(BaseModel):
     title: str
     content: str
     image: str
-    author: str  # Thêm trường author
+    author: str 
 
 class User(BaseModel):
     full_name: str

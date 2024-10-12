@@ -7,15 +7,15 @@ function Blog() {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [image, setImage] = useState('');
-    const [fullName, setFullName] = useState('');  // Tên của user hiện tại
-    const [editingPostId, setEditingPostId] = useState(null);  // Lưu trữ ID của post đang edit
-    const [username, setUsername] = useState('');  // Username của người dùng
-    const [password, setPassword] = useState('');  // Password của người dùng
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // Kiểm tra trạng thái đăng nhập
-    const [showDropdown, setShowDropdown] = useState(false); // Kiểm tra trạng thái dropdown
-    const [showModal, setShowModal] = useState(false); // Kiểm tra trạng thái modal
-    const [isLogin, setIsLogin] = useState(true); // Kiểm tra xem modal đang ở trạng thái login hay signup
-    const [showEditModal, setShowEditModal] = useState(false);  // Hiển thị modal Edit
+    const [fullName, setFullName] = useState('');  
+    const [editingPostId, setEditingPostId] = useState(null);  
+    const [username, setUsername] = useState(''); 
+    const [password, setPassword] = useState('');  
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [showDropdown, setShowDropdown] = useState(false);
+    const [showModal, setShowModal] = useState(false); 
+    const [isLogin, setIsLogin] = useState(true); 
+    const [showEditModal, setShowEditModal] = useState(false);  
 
     const dropdownRef = useRef(null);
 
@@ -47,7 +47,6 @@ function Blog() {
 
     const createOrEditPost = async () => {
         if (editingPostId) {
-            // Nếu có ID bài viết đang chỉnh sửa thì gọi API cập nhật bài viết
             try {
                 await axios.put(`http://localhost:8000/posts/${editingPostId}`, {
                     title,
@@ -56,23 +55,22 @@ function Blog() {
                     author: fullName
                 });
                 alert('Post updated successfully!');
-                setEditingPostId(null);  // Reset sau khi cập nhật xong
+                setEditingPostId(null); 
                 setTitle('');
                 setContent('');
                 setImage('');
-                setShowEditModal(false);  // Ẩn modal chỉnh sửa
-                fetchPosts();  // Tải lại danh sách bài viết sau khi cập nhật
+                setShowEditModal(false);  
+                fetchPosts();  
             } catch (error) {
                 console.error('Error editing post:', error);
             }
         } else {
-            // Nếu không có ID, thì tạo bài viết mới
             try {
                 await axios.post('http://localhost:8000/posts/', {
                     title,
                     content,
                     image,
-                    author: fullName // Thêm tên tác giả
+                    author: fullName 
                 });
                 fetchPosts();
                 setTitle('');
@@ -89,9 +87,9 @@ function Blog() {
         setTitle(post.title);
         setContent(post.content);
         setImage(post.image);
-        setEditingPostId(post._id);  // Lưu lại ID bài viết đang chỉnh sửa
-        setShowEditModal(true);  // Hiển thị modal chỉnh sửa
-        console.log("Editing Post ID:", post._id);  // Kiểm tra giá trị ID
+        setEditingPostId(post._id);
+        setShowEditModal(true); 
+        console.log("Editing Post ID:", post._id);  
     };
     
     
@@ -114,8 +112,8 @@ function Blog() {
                 username: username,
                 password: password,
             });
-            setFullName(response.data.full_name); // Lưu tên đầy đủ của người dùng
-            setIsLoggedIn(true); // Đánh dấu người dùng đã đăng nhập
+            setFullName(response.data.full_name);
+            setIsLoggedIn(true);
             alert('Login successful!');
             // Reset form fields
             setUsername('');
@@ -140,7 +138,7 @@ function Blog() {
             setFullName('');
             setUsername('');
             setPassword('');
-            setIsLogin(true); // Switch to login form after successful signup
+            setIsLogin(true);
         } catch (error) {
             console.error('Error signing up:', error);
             alert('Sign up failed! Please try again.');
